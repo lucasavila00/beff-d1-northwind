@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useStats } from "~/components/StatsContext";
+import { fetchClient } from "../utils/beff";
 
 interface Status {
   cf:
@@ -24,19 +25,12 @@ export default function Dash() {
 
   useEffect(() => {
     //TODO: use a loader
-    const path = `${
-      process.env.NODE_ENV === "production"
-        ? "https://api.northwind.d1sql.com"
-        : "http://127.0.0.1:8787"
-    }/api/status`;
-    fetch(path)
-      .then((res) => res.json())
-      .then(
-        (result: any) => {
-          setStatus(result);
-        },
-        (error) => {}
-      );
+    fetchClient["/status"].get().then(
+      (result: any) => {
+        setStatus(result);
+      },
+      (error) => {}
+    );
   }, []); // runs only once
 
   return (

@@ -13,6 +13,7 @@
     "wrangler": "wrangler pages dev ./public"
   },
   "dependencies": {
+    "@beff/client": "^0.0.8",
     "@reduxjs/toolkit": "^1.9.5",
     "@remix-run/cloudflare": "^1.16.0",
     "@remix-run/cloudflare-pages": "^1.16.0",
