@@ -1,0 +1,4 @@
+{
+    "router": "lib/router.ts",
+    "outputDir": "lib/generated"
+}

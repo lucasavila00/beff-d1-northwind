@@ -4,6 +4,6 @@ name = "northwind-worker"
 route = "api.northwind.d1sql.com/*"
 
 [[d1_databases]]
-binding = "DB"
+binding = "DB" # i.e. available in your Worker on env.DB
+database_id = "8a2f773d-ca5e-426c-a6c3-df1efa312d0c" 
 database_name = "northwind"
-database_id = "d5b1d127-1d3f-467e-953b-cbc69f0a9e06"

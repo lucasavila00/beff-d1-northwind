@@ -7,6 +7,7 @@
     "lib": "lib"
   },
   "scripts": {
+    "beff": "beff -p beff.json",
     "dev": "NO_D1_WARNING=true wrangler dev",
     "deploy": "NO_D1_WARNING=true wrangler deploy",
     "local:init": "NO_D1_WARNING=true wrangler d1 execute northwind --file=../db/schema.sql --local",
@@ -16,7 +17,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@beff/cli": "^0.0.8",
+    "@beff/hono": "^0.0.8",
     "@cloudflare/workers-types": "^4.20230419.0",
-    "wrangler": "^3.0.1"
+    "wrangler": "^3.7.0"
   }
 }
