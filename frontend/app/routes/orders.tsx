@@ -6,14 +6,14 @@ import { useLoaderData } from "@remix-run/react";
 import { useStatsDispatch } from "~/components/StatsContext";
 import { fetchClient } from "../utils/beff";
 
-export const loader: LoaderFunction = async ({ request }) => {
+export const loader = (async ({ request }) => {
   const url = new URL(request.url);
 
   const page = Number(url.searchParams.get("page")) || 1;
   const count = url.searchParams.get("count");
 
   return fetchClient["/orders"].get(Number(count) == 0, page);
-};
+}) satisfies LoaderFunction;
 type LoaderType = Awaited<ReturnType<typeof loader>>;
 
 interface Order {

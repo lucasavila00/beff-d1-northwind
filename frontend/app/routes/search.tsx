@@ -5,13 +5,13 @@ import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useStatsDispatch } from "~/components/StatsContext";
 import { fetchClient } from "../utils/beff";
 
-export const loader: LoaderFunction = async ({ request }) => {
+export const loader = (async ({ request }) => {
   const url = new URL(request.url);
   const keyword = url.searchParams.get("q");
   const table = url.searchParams.get("table");
 
   return fetchClient["/search"].get(String(keyword), String(table));
-};
+}) satisfies LoaderFunction;
 type LoaderType = Awaited<ReturnType<typeof loader>>;
 
 const Search = () => {
@@ -103,7 +103,7 @@ const Search = () => {
                             */}
           </div>
           <p className="text-black font-bold text-lg">Search results</p>
-          {results.length ? (
+          {results?.length ? (
             <>
               {/* <pre className="text-gray-400 text-sm">{log}</pre> */}
               {results.map((r: any, idx: number) => {

@@ -7,10 +7,10 @@ import type { LoaderFunction } from "@remix-run/cloudflare";
 import invariant from "tiny-invariant";
 import { fetchClient } from "../utils/beff";
 
-export const loader: LoaderFunction = async ({ params }) => {
+export const loader = (async ({ params }) => {
   invariant(params.id, "Missing id");
   return fetchClient["/product"].get(params.id);
-};
+}) satisfies LoaderFunction;
 type LoaderType = Awaited<ReturnType<typeof loader>>;
 
 const Product = () => {

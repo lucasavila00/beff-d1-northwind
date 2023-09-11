@@ -7,10 +7,10 @@ import { useStatsDispatch } from "~/components/StatsContext";
 import { useLoaderData } from "@remix-run/react";
 import { fetchClient } from "../utils/beff";
 
-export const loader: LoaderFunction = async ({ params }) => {
+export const loader = (async ({ params }) => {
   invariant(params.id, "Missing id");
   return fetchClient["/supplier"].get(params.id);
-};
+}) satisfies LoaderFunction;
 type LoaderType = Awaited<ReturnType<typeof loader>>;
 
 const Supplier = () => {
