@@ -1,27 +1,16 @@
 import type { LoaderFunction } from "@remix-run/cloudflare";
-import { json } from "@remix-run/cloudflare"; // or cloudflare/deno
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { AddTableField } from "~/components/AddTableField";
 import { useLoaderData } from "@remix-run/react";
 import invariant from "tiny-invariant";
 import { useStatsDispatch } from "~/components/StatsContext";
+import { fetchClient } from "../utils/beff";
 
-export const loader: LoaderFunction = async ({ params }) => {
+export const loader = (async ({ params }) => {
   invariant(params.id, "Missing id");
-
-  const rand = Math.floor(Math.random() * 1000001);
-  const path = `${
-    process.env.NODE_ENV === "production"
-      ? "https://api.northwind.d1sql.com"
-      : "http://127.0.0.1:8787"
-  }/api/customer?Id=${params.id}&rand=${rand}`;
-
-  const res = await fetch(path);
-  const result = (await res.json()) as any;
-
-  return json({ ...result });
-};
+  return fetchClient["/customer"].get(params.id);
+}) satisfies LoaderFunction;
 type LoaderType = Awaited<ReturnType<typeof loader>>;
 
 const Customer = () => {

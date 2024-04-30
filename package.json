@@ -12,6 +12,9 @@
     "frontend"
   ],
   "devDependencies": {
-    "wrangler": "^3.0.1"
+    "wrangler": "^3.7.0"
+  },
+  "dependencies": {
+    "prettier": "^3.0.3"
   }
 }

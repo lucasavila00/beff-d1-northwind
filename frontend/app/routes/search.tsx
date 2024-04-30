@@ -1,24 +1,17 @@
 import type { LoaderFunction } from "@remix-run/cloudflare";
-import { json } from "@remix-run/cloudflare";
 import { useLoaderData } from "@remix-run/react";
 import { useState, useEffect } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useStatsDispatch } from "~/components/StatsContext";
+import { fetchClient } from "../utils/beff";
 
-export const loader: LoaderFunction = async ({ request }) => {
+export const loader = (async ({ request }) => {
   const url = new URL(request.url);
   const keyword = url.searchParams.get("q");
   const table = url.searchParams.get("table");
-  const rand = Math.floor(Math.random() * 1000001);
-  const path = `${
-    process.env.NODE_ENV === "production"
-      ? "https://api.northwind.d1sql.com"
-      : "http://127.0.0.1:8787"
-  }/api/search?q=${keyword}&rand=${rand}&table=${table ?? "products"}`;
-  const res = await fetch(path);
-  const result = (await res.json()) as any;
-  return json({ ...result });
-};
+
+  return fetchClient["/search"].get(String(keyword), String(table));
+}) satisfies LoaderFunction;
 type LoaderType = Awaited<ReturnType<typeof loader>>;
 
 const Search = () => {
@@ -110,7 +103,7 @@ const Search = () => {
                             */}
           </div>
           <p className="text-black font-bold text-lg">Search results</p>
-          {results.length ? (
+          {results?.length ? (
             <>
               {/* <pre className="text-gray-400 text-sm">{log}</pre> */}
               {results.map((r: any, idx: number) => {
